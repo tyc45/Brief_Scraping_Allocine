@@ -10,8 +10,8 @@ class BestMoviesSpider(CrawlSpider):
 
     rules = (
         # Rule(LinkExtractor(restrict_xpaths='//section[@class="section section-wrap gd-3-cols gd-gap-20"]'), callback='parse_item', follow=True),
-        Rule(LinkExtractor(restrict_xpaths='//h2[@class="meta-title"]'), callback='parse_item', follow=True),
-        Rule(LinkExtractor(restrict_xpaths='//a[@class="xXx button button-md button-primary-full button-right"]')),
+        Rule(LinkExtractor(restrict_xpaths=['//h2[@class="meta-title"]']), callback='parse_item', follow=True),
+        Rule(LinkExtractor(restrict_xpaths='//div[@class="pagination-item-holder"]')),
     )
 
     def parse_item(self, response):
