@@ -1,4 +1,5 @@
 import scrapy
+import re
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from Brief_Scraping_Allocine import methods
@@ -21,6 +22,7 @@ class BestTvShowsSpider(CrawlSpider):
         item['release_date'] = response.xpath('//li[@data-testid="title-details-releasedate"]/div/ul/li/a/text()').get()
         item['target_audience'] = response.xpath('//ul[@class="ipc-inline-list ipc-inline-list--show-dividers TitleBlockMetaData__MetaDataList-sc-12ein40-0 dxizHm baseAlt"]/li[3]/a/text()').get()
         item['length'] = "".join(response.xpath('//ul[@class="ipc-inline-list ipc-inline-list--show-dividers TitleBlockMetaData__MetaDataList-sc-12ein40-0 dxizHm baseAlt"]/li[4]/text()').getall())
+        print(item['length'])
         item['length'] = methods.minutify(item['length'])
         item['rating'] = response.xpath('//span[@class="AggregateRatingButton__RatingScore-sc-1ll29m0-1 iTLWoV"]/text()').get()
         item['synopsis'] = response.xpath('//span[@class="GenresAndPlot__TextContainerBreakpointXL-cum89p-2 gCtawA"]/text()').get()
