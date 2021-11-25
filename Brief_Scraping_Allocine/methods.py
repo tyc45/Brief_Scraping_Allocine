@@ -10,3 +10,7 @@ def minutify(str):
         elif str.find('m') != -1:
                 m = int(re.findall(r'(\d+)m', str)[0])
         return (h*60)+m
+
+def down_with_france(str):
+        result= re.findall(r'(\w* \w*, \w*) \(France\)',str)
+        print(result)
