@@ -1,1 +1,1 @@
-web: sh setup.sh && streamlit run ./apps/search_engine.py
+web: sh setup.sh && streamlit run search_engine.py
