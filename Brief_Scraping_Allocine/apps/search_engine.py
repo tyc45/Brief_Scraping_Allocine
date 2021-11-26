@@ -29,11 +29,21 @@ genre_list = best_movies['genres'].str.split(',').explode()
 genre_list = list(dict.fromkeys(genre_list))
 # genre_list
 
-title_filter = st.sidebar.selectbox('Title', best_movies['title'])
-staring_filter = st.sidebar.selectbox('Staring', actor_list)
-genre_filter = st.sidebar.selectbox('Genre', genre_list)
-length_filter = st.sidebar.slider('Length', min_value= min_length, max_value= max_length , value= avg_length)
-rating_filter = st.sidebar.slider('Rating', min_value= min_rating, max_value= max_rating , value= avg_rating)
+# if checkbox then...
+with data_filtered:
+    title_mask = staring_mask = genre_mask = length_mask = rating_mask = pd.Series(True, best_movies.index)
+    if st.sidebar.checkbox('Title'):
+        title_mask = best_movies['title'] == st.sidebar.selectbox('', best_movies['title'])
+    if st.sidebar.checkbox('Staring'):
+        staring_mask = best_movies['staring'].str.contains(st.sidebar.selectbox('', actor_list))
+    if st.sidebar.checkbox('Genre'):
+        genre_mask = best_movies['genres'].str.contains(st.sidebar.selectbox('', genre_list))
+    if st.sidebar.checkbox('Length'):
+        length_mask = best_movies['length'] >= st.sidebar.slider('', min_value= min_length, max_value= max_length , value= avg_length)
+    if st.sidebar.checkbox('Rating'):
+        rating_mask = best_movies['rating'] >= st.sidebar.slider('', min_value= min_rating, max_value= max_rating , value= avg_rating)
 
+    best_movies[title_mask & staring_mask & genre_mask & length_mask & rating_mask]
+    
 # best_movies
 # best_movies[best_movies['title'] == title_filter]
